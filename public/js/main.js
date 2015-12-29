@@ -23190,7 +23190,7 @@ var Route = ReactRouter.Route;
 
 var CreateHistory = require('history/lib/createHashHistory');
 
-var Base = require('./components/Base.jsx');
+var TodoApp3 = require('./components/TodoApp3.jsx');
 
 //Removes the haskey from the url and shows the page name in text
 var History = new CreateHistory({
@@ -23200,22 +23200,86 @@ var History = new CreateHistory({
 var Routes = React.createElement(
   Router,
   { history: History },
-  React.createElement(
-    Route,
-    { path: '/', component: Base },
-    React.createElement(Route, { path: '/' }),
-    React.createElement(Route, { path: '/' })
-  )
+  React.createElement(Route, { path: '/', component: TodoApp3 })
 );
 
 module.exports = Routes;
 
-},{"./components/Base.jsx":207,"history/lib/createHashHistory":37,"react":203,"react-router":70}],207:[function(require,module,exports){
+},{"./components/TodoApp3.jsx":207,"history/lib/createHashHistory":37,"react":203,"react-router":70}],207:[function(require,module,exports){
 var React = require('react');
-var Link = require('react-router').Link;
 
-var Base = React.createClass({
-  displayName: 'Base',
+var TodoList3 = React.createClass({
+  displayName: 'TodoList3',
+
+  render: function () {
+    var _this = this;
+    var createItem = function (item, index) {
+      return React.createElement(
+        'li',
+        { key: index },
+        item.text,
+        React.createElement(
+          'span',
+          { onClick: _this.props.removeItem.bind(null, item['.key']),
+            style: { color: 'red', marginLeft: '10px', cursor: 'pointer' } },
+          'X'
+        )
+      );
+    };
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'h3',
+        null,
+        'Items:'
+      ),
+      React.createElement(
+        'ul',
+        null,
+        this.props.items.map(createItem)
+      )
+    );
+  }
+});
+
+var TodoApp3 = React.createClass({
+  displayName: 'TodoApp3',
+
+  mixins: [ReactFireMixin],
+
+  getInitialState: function () {
+    return {
+      items: [],
+      text: ''
+    };
+  },
+
+  componentWillMount: function () {
+    var firebaseRef = new Firebase('https://elixir7-firebase-test.firebaseio.com/items/');
+    this.bindAsArray(firebaseRef.limitToLast(25), 'items');
+  },
+
+  onChange: function (e) {
+    this.setState({ text: e.target.value });
+  },
+
+  removeItem: function (key) {
+    var firebaseRef = new Firebase('https://elixir7-firebase-test.firebaseio.com/items/');
+    firebaseRef.child(key).remove();
+  },
+
+  handleSubmit: function (e) {
+    e.preventDefault();
+    if (this.state.text && this.state.text.trim().length !== 0) {
+      this.firebaseRefs['items'].push({
+        text: this.state.text
+      });
+      this.setState({
+        text: ''
+      });
+    }
+  },
 
   render: function () {
     return React.createElement(
@@ -23226,92 +23290,21 @@ var Base = React.createClass({
         { className: 'row' },
         React.createElement(
           'div',
-          { className: 'col-md-12' },
+          { className: 'col-md-6 col-md-offset-3' },
           React.createElement(
             'h1',
             null,
-            'React Skeleton'
+            'Todo List Test with FireBase'
           ),
+          React.createElement(TodoList3, { items: this.state.items, removeItem: this.removeItem }),
           React.createElement(
-            'h3',
-            null,
-            'What\'s included'
-          ),
-          React.createElement(
-            'p',
-            null,
-            'Npm packages:'
-          ),
-          React.createElement(
-            'ul',
-            null,
-            React.createElement(
-              'li',
-              null,
-              'History'
-            ),
-            React.createElement(
-              'li',
-              null,
-              'Browserify'
-            ),
-            React.createElement(
-              'li',
-              null,
-              'Babel-preset-react'
-            ),
-            React.createElement(
-              'li',
-              null,
-              'Http-server'
-            ),
-            React.createElement(
-              'li',
-              null,
-              'React'
-            ),
-            React.createElement(
-              'li',
-              null,
-              'React-DOM'
-            ),
-            React.createElement(
-              'li',
-              null,
-              'Watchify'
-            )
-          ),
-          React.createElement(
-            'p',
-            null,
-            'Other:'
-          ),
-          React.createElement(
-            'ul',
-            null,
-            React.createElement(
-              'li',
-              null,
-              'Bootstrap'
-            ),
-            React.createElement(
-              'li',
-              null,
-              'jQuery'
-            )
-          ),
-          React.createElement(
-            'h3',
-            null,
-            'Find it on github'
-          ),
-          React.createElement(
-            'a',
-            { href: 'https://github.com/elixir7/react-skeleton' },
+            'form',
+            { onSubmit: this.handleSubmit },
+            React.createElement('input', { onChange: this.onChange, value: this.state.text }),
             React.createElement(
               'button',
-              { type: 'btn', className: 'btn btn-primary' },
-              'Github'
+              null,
+              'Add #' + (this.state.items.length + 1)
             )
           )
         )
@@ -23320,9 +23313,9 @@ var Base = React.createClass({
   }
 });
 
-module.exports = Base;
+module.exports = TodoApp3;
 
-},{"react":203,"react-router":70}],208:[function(require,module,exports){
+},{"react":203}],208:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Routes = require('./Routes.jsx');
