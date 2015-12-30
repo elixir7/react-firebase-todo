@@ -1,29 +1,7 @@
 var React = require('react');
+var TodoList = require('./TodoList.jsx');
 
-var TodoList3 = React.createClass({
-  render: function() {
-    var _this = this;
-    var createItem = function(item, index) {
-      return (
-        <li key={ index }>
-          { item.text }
-          <span onClick={ _this.props.removeItem.bind(null, item['.key']) }
-                style={{ color: 'red', marginLeft: '10px', cursor: 'pointer' }}>
-            X
-          </span>
-        </li>
-      );
-    };
-    return (
-      <div>
-        <h3>Items:</h3>
-        <ul>{ this.props.items.map(createItem) }</ul>
-      </div>
-    );
-  }
-});
-
-var TodoApp3 = React.createClass({
+var TodoApp = React.createClass({
   mixins: [ReactFireMixin],
 
   getInitialState: function() {
@@ -65,7 +43,7 @@ var TodoApp3 = React.createClass({
         <div className="row">
           <div className="col-md-6 col-md-offset-3">
             <h1>Todo List Test with FireBase</h1>
-            <TodoList3 items={ this.state.items } removeItem={ this.removeItem } />
+            <TodoList items={ this.state.items } removeItem={ this.removeItem } />
             <form onSubmit={ this.handleSubmit }>
               <input onChange={ this.onChange } value={ this.state.text } />
               <button>{ 'Add #' + (this.state.items.length + 1) }</button>
@@ -77,4 +55,4 @@ var TodoApp3 = React.createClass({
   }
 });
 
-module.exports = TodoApp3;
+module.exports = TodoApp;

@@ -5,7 +5,7 @@ var Route = ReactRouter.Route;
 
 var CreateHistory = require('history/lib/createHashHistory');
 
-var TodoApp3 = require('./components/TodoApp3.jsx');
+var TodoApp = require('./components/TodoApp.jsx');
 
 //Removes the haskey from the url and shows the page name in text
 var History = new CreateHistory({
@@ -14,7 +14,7 @@ var History = new CreateHistory({
 
 var Routes = (
   <Router history={History}>
-      <Route path="/" component={TodoApp3} >
+      <Route path="/" component={TodoApp} >
       </Route>
   </Router>
 );

@@ -23190,7 +23190,7 @@ var Route = ReactRouter.Route;
 
 var CreateHistory = require('history/lib/createHashHistory');
 
-var TodoApp3 = require('./components/TodoApp3.jsx');
+var TodoApp = require('./components/TodoApp.jsx');
 
 //Removes the haskey from the url and shows the page name in text
 var History = new CreateHistory({
@@ -23200,51 +23200,17 @@ var History = new CreateHistory({
 var Routes = React.createElement(
   Router,
   { history: History },
-  React.createElement(Route, { path: '/', component: TodoApp3 })
+  React.createElement(Route, { path: '/', component: TodoApp })
 );
 
 module.exports = Routes;
 
-},{"./components/TodoApp3.jsx":207,"history/lib/createHashHistory":37,"react":203,"react-router":70}],207:[function(require,module,exports){
+},{"./components/TodoApp.jsx":207,"history/lib/createHashHistory":37,"react":203,"react-router":70}],207:[function(require,module,exports){
 var React = require('react');
+var TodoList = require('./TodoList.jsx');
 
-var TodoList3 = React.createClass({
-  displayName: 'TodoList3',
-
-  render: function () {
-    var _this = this;
-    var createItem = function (item, index) {
-      return React.createElement(
-        'li',
-        { key: index },
-        item.text,
-        React.createElement(
-          'span',
-          { onClick: _this.props.removeItem.bind(null, item['.key']),
-            style: { color: 'red', marginLeft: '10px', cursor: 'pointer' } },
-          'X'
-        )
-      );
-    };
-    return React.createElement(
-      'div',
-      null,
-      React.createElement(
-        'h3',
-        null,
-        'Items:'
-      ),
-      React.createElement(
-        'ul',
-        null,
-        this.props.items.map(createItem)
-      )
-    );
-  }
-});
-
-var TodoApp3 = React.createClass({
-  displayName: 'TodoApp3',
+var TodoApp = React.createClass({
+  displayName: 'TodoApp',
 
   mixins: [ReactFireMixin],
 
@@ -23296,7 +23262,7 @@ var TodoApp3 = React.createClass({
             null,
             'Todo List Test with FireBase'
           ),
-          React.createElement(TodoList3, { items: this.state.items, removeItem: this.removeItem }),
+          React.createElement(TodoList, { items: this.state.items, removeItem: this.removeItem }),
           React.createElement(
             'form',
             { onSubmit: this.handleSubmit },
@@ -23313,13 +23279,49 @@ var TodoApp3 = React.createClass({
   }
 });
 
-module.exports = TodoApp3;
+module.exports = TodoApp;
 
-},{"react":203}],208:[function(require,module,exports){
+},{"./TodoList.jsx":208,"react":203}],208:[function(require,module,exports){
+var React = require('react');
+
+var TodoList = React.createClass({
+  displayName: 'TodoList',
+
+  render: function () {
+    var _this = this;
+    var createItem = function (item, index) {
+      return React.createElement(
+        'li',
+        { key: index },
+        item.text,
+        React.createElement('i', { className: 'fa fa-minus-circle', onClick: _this.props.removeItem.bind(null, item['.key']),
+          style: { color: '#DC4E41', marginLeft: '10px', cursor: 'pointer' } })
+      );
+    };
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'h3',
+        null,
+        'Items:'
+      ),
+      React.createElement(
+        'ul',
+        null,
+        this.props.items.map(createItem)
+      )
+    );
+  }
+});
+
+module.exports = TodoList;
+
+},{"react":203}],209:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Routes = require('./Routes.jsx');
 
 ReactDOM.render(Routes, document.getElementById('main'));
 
-},{"./Routes.jsx":206,"react":203,"react-dom":50}]},{},[208]);
+},{"./Routes.jsx":206,"react":203,"react-dom":50}]},{},[209]);
