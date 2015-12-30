@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elixir7/react-skeleton.git"
+    "url": "git+https://github.com/elixir7/react-firebase-todo.git"
   },
   "author": "Isak Åslund",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/elixir7/react-skeleton/issues"
+    "url": "https://github.com/elixir7/react-firebase-todo/issues"
   },
-  "homepage": "https://github.com/elixir7/react-skeleton#readme",
+  "homepage": "https://github.com/elixir7/react-firebase-todo#readme",
   "dependencies": {
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
